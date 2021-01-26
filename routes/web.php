@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\TaskController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,10 +20,15 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->name('dashboard');
 
 Route::get('mylog',[TestController::class,'show'])->middleware(['myLog:okkk']);
 
 Route::resource('test',TestController::class);
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::resource('task', TaskController::class);
+});
+
 
 require __DIR__.'/auth.php';
