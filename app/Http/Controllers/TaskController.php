@@ -19,10 +19,19 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::where(['user_id' => Auth::user()->id])->get();
-        return response()->json([
-            'tasks'    => $tasks,
-        ], 200);
+        $tasks = Task::where(['user_id' => Auth::user()->id])->paginate(5);
+        $response = [
+            'data' => $tasks,
+            'pagination' => [
+                'total' => $tasks->total(),
+                'per_page' => $tasks->perPage(),
+                'current_page' => $tasks->currentPage(),
+                'last_page' => $tasks->lastPage(),
+                'from' => $tasks->firstItem(),
+                'to' => $tasks->lastItem()
+            ]
+        ];
+        return response()->json($response,200);
     }
 
     /**

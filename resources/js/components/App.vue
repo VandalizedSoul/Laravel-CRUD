@@ -1,8 +1,12 @@
 <template>
-  <div id="app">
-    <div class="heading">
-      <h1>Cruds</h1>
+    <div class="container"> 
+        <Nav></Nav>
+        <br/>
+        <router-view> </router-view>
+        <Footer></Footer>
     </div>
-    <task></task>
-  </div>
 </template>
+ 
+<script>
+    export default {}
+</script>
