@@ -1,8 +1,8 @@
 <template>
+<div>
+  <h3>Create Task</h3>
   <div class="card" style="width: 40rem; float: center">
     <div class="card-body">
-      <h3 class="card-title">Create Task</h3>
-      <form @submit.prevent="createTask">
         <div class="alert alert-danger" v-if="errors.length > 0">
           <ul>
             <li v-for="error in errors" :key="error">{{ error }}</li>
@@ -21,24 +21,26 @@
         </div>
         <div class="form-group">
           <label for="description">Description:</label>
-          <textarea
-            name="description"
-            id="description"
-            cols="30"
-            rows="5"
-            class="form-control"
-            placeholder="Task Description"
-            v-model="task.description"
-          ></textarea>
+          <Editor
+            @update="
+              (new_content) => {
+                task.description = new_content;
+              }
+            "
+          ></Editor>
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
-      </form>
+        <button type="button" @click="createTask" class="btn btn-primary">Create</button>
     </div>
   </div>
+</div>
 </template>
  
 <script>
+import Editor from "./Editor";
 export default {
+  components: {
+    Editor,
+  },
   data() {
     return {
       task: {
@@ -50,6 +52,9 @@ export default {
   },
   methods: {
     createTask() {
+      if(this.task.description === "<p></p>"){
+        this.task.description = '';
+      }
       axios
         .post("/task", {
           name: this.task.name,
