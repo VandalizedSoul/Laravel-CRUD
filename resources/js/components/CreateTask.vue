@@ -1,8 +1,8 @@
 <template>
-<div>
-  <h3>Create Task</h3>
-  <div class="card" style="width: 40rem; float: center">
-    <div class="card-body">
+  <div>
+    <h3>Create Task</h3>
+    <div class="card" style="width: 40rem; float: center">
+      <div class="card-body">
         <div class="alert alert-danger" v-if="errors.length > 0">
           <ul>
             <li v-for="error in errors" :key="error">{{ error }}</li>
@@ -29,10 +29,12 @@
             "
           ></Editor>
         </div>
-        <button type="button" @click="createTask" class="btn btn-primary">Create</button>
+        <button type="button" @click="createTask" class="btn btn-primary">
+          Create
+        </button>
+      </div>
     </div>
   </div>
-</div>
 </template>
  
 <script>
@@ -52,8 +54,8 @@ export default {
   },
   methods: {
     createTask() {
-      if(this.task.description === "<p></p>"){
-        this.task.description = '';
+      if (this.task.description === "<p></p>") {
+        this.task.description = "";
       }
       axios
         .post("/task", {
@@ -62,8 +64,8 @@ export default {
         })
         .then((response) => {
           this.reset();
-          alert('Task added');
-         this.$router.push({ name: "home" });
+          alert("Task added");
+          this.$router.push({ name: "home" });
         })
         .catch((error) => {
           this.errors = [];

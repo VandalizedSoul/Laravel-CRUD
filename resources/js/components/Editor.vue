@@ -61,7 +61,7 @@ export default {
   },
   data() {
     return {
-      new_content:null,
+      new_content: null,
       editor: new Editor({
         extensions: [
           new CodeBlock(),
@@ -83,17 +83,17 @@ export default {
     };
   },
   watch: {
-    new_content(){
+    new_content() {
       //console.log("change");
-      this.$emit('update',this.new_content);
+      this.$emit("update", this.new_content);
     },
-    parent_content(){
-      this.editor.setContent(this.parent_content,false);
-    }
+    parent_content() {
+      this.editor.setContent(this.parent_content, false);
+    },
   },
   beforeDestroy() {
     this.editor.destroy();
-  }
+  },
 };
 </script>
 
@@ -102,7 +102,7 @@ export default {
   background-color: white;
   border: 1px;
   max-height: 300px;
-  overflow:auto;
+  overflow: auto;
 }
 .menubar {
   background-color: lightgray;
@@ -117,7 +117,7 @@ div.ProseMirror {
   border-radius: 0.25rem;
 }
 button {
-  background-color:  lightgray;
+  background-color: lightgray;
   border: white;
   display: inline-block;
 }
