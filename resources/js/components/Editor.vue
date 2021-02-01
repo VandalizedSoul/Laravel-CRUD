@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import Icon from "./Icon";
+// import Icon from "./Icon";
 import { Editor, EditorContent, EditorMenuBar } from "tiptap";
 import {
   CodeBlock,
@@ -57,7 +57,7 @@ export default {
   components: {
     EditorContent,
     EditorMenuBar,
-    Icon,
+    // Icon,
   },
   data() {
     return {

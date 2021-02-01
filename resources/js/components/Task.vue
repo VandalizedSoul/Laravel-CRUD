@@ -164,13 +164,15 @@ export default {
         });
     },
     deleteTask(index) {
-      let conf = confirm("Do you ready want to delete this task?");
+      let conf = confirm("Do you really want to delete this task?");
       if (conf === true) {
         axios
           .delete("/task/" + this.tasks[index].id)
           .then((response) => {
-            if (this.pagination.current_page > 1 && this.tasks.length == 1) {
-              this.pagination.current_page += -1;
+            if (this.tasks.length == 1) {
+              if(this.pagination.current_page > 1){
+                this.pagination.current_page += -1;
+              }  
               this.readTasks();
             } else {
               this.tasks.splice(index, 1);
