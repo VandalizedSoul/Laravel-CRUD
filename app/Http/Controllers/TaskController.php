@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Omniphx\Forrest\Providers\Laravel\Facades\Forrest;
 
 class TaskController extends Controller
 {
@@ -69,12 +70,28 @@ class TaskController extends Controller
             'user_id'     => Auth::user()->id
  
         ]);
+        $message = 'Success';
+        //Store Todo object in SF
+        try{
+
+            Forrest::sobjects('Todo__c',[
+                'method' => 'post',
+                'body'   => [
+                    'Name' => request('name'),
+                    'Description__c' => request('description'),
+                    'User_Id__c' => Auth::user()->id
+                ]
+            ]);
+        }
+        catch(Exception $e){
+           throw new Exception('Error in Salesforce transaction');
+        }
 
         return response()->json([
  
             'task'    => $task,
  
-            'message' => 'Success'
+            'message' => $message
  
         ], 200);
  

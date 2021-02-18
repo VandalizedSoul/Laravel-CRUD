@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TaskController;
+require __DIR__.'/auth.php';
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,17 +15,19 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('dashboard');
-// });
+//Salesforce authentication for server
+Route::get('/authenticate', function()
+{
+    return Forrest::authenticate();
+});
+//Callback after successful authentication
+Route::get('/callback', function()
+{
+    Forrest::callback();
+    return Redirect::to('/');
+});
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('dashboard');
-
-Route::get('mylog',[TestController::class,'show'])->middleware(['myLog:okkk']);
-
-Route::resource('test',TestController::class);
+// Route::get('mylog',[TestController::class,'show'])->middleware(['myLog:okkk']);
 
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('task', TaskController::class);
@@ -37,11 +40,8 @@ Route::group(['middleware' => 'auth'], function() {
     });
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');    
+    })->name('dashboard');  
 });
-
-
-require __DIR__.'/auth.php';
 
 Auth::routes();
 
